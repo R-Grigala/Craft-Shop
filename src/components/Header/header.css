@@ -1,0 +1,42 @@
+
+
+.header {
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+}
+
+.nav__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}
+
+.logo img {
+    width: 35px;
+    height: 35px;
+}
+
+.logo h1 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    column-gap: 2.7rem;
+}
+
+.nav__item a {
+    color: var(--primary-color);
+    font-weight: 500;
+    cursor: pointer;
+}
