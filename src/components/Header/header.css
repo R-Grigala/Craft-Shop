@@ -19,8 +19,8 @@
 }
 
 .logo img {
-    width: 35px;
-    height: 35px;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .logo h1 {
@@ -33,10 +33,39 @@
     display: flex;
     align-items: center;
     column-gap: 2.7rem;
+    margin-bottom: 0;
 }
 
 .nav__item a {
     color: var(--primary-color);
     font-weight: 500;
     cursor: pointer;
+}
+
+.nav__icons {
+    display: flex;
+    align-items: center;
+    column-gap: 1.2rem;
+}
+
+.nav__icons span i {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.nav__icons span img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.mobile__menu {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    display: none;
+}
+
+.nav__active {
+    font-weight: 700 !important;
 }
