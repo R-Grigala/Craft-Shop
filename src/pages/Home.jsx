@@ -11,6 +11,7 @@ import { Container, Row, Col } from 'reactstrap';
 import heroImg from '../assets/images/hero-img.png';
 
 import Services from '../services/Services';
+import ProductsList from '../components/UI/ProductsList';
 
 const Home = () => {
 
@@ -39,11 +40,14 @@ const Home = () => {
     </section>
     <Services/>
     <section className='trending__products'>
-      <Row>
-        <Col lg='12' className='text-center'>
-          <h2 className='section__title'>Trending Products</h2>
-        </Col>
-      </Row>
+      <Container>
+        <Row>
+          <Col lg='12' className='text-center'>
+            <h2 className='section__title'>Trending Products</h2>
+          </Col>
+          <ProductsList />
+        </Row>
+      </Container>
     </section>
   </Helmet>;
 }
