@@ -67,6 +67,27 @@
     .section__title {
         font-style: 1.7rem;
     }
+
+    .counter__img {
+        display: none;
+    }
+
+    .clock__top-content {
+        text-align: center;
+    }
+
+    .clock__top-content h4 {
+        font-style: 0.9rem !important;
+    }
+    
+    .clock__top-content h3 {
+        font-style: 1rem !important;
+    }
+
+    .counter__down-col {
+        text-align: center;
+        display: inline-block;
+    }
 }
 
 @media only screen and (max-width: 768px){
@@ -78,7 +99,7 @@
         font-style: 0.9rem;
     }
 
-    .buy__btn {
+    .buy__btn a{
         font-size: 0.9rem;
     }
 
