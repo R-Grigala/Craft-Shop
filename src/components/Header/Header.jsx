@@ -30,7 +30,7 @@ const Header = () => {
   const headerRef = useRef(null);
 
   const stickyHeaderFunc = ()=> {
-    window.addEventListener("scroll", ()=> {
+    window.addEventListener("scroll", () => {
       if(
         document.body.scrollTop > 80 || 
         document.documentElement.scrollTop > 80
@@ -49,7 +49,7 @@ const Header = () => {
 
   });
 
-  return <header className='header'>
+  return <header className='header' ref={headerRef}>
     <Container>
       <Row>
         <div className='nav__wrapper'>
