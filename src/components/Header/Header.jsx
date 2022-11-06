@@ -29,6 +29,8 @@ const Header = () => {
 
   const headerRef = useRef(null);
 
+  const menuRef = useRef(null);
+
   const stickyHeaderFunc = ()=> {
     window.addEventListener("scroll", () => {
       if(
@@ -49,6 +51,8 @@ const Header = () => {
 
   });
 
+  const menuToggle = () => menuRef.current.classList.toggle('active__menu')
+
   return <header className='header' ref={headerRef}>
     <Container>
       <Row>
@@ -59,7 +63,7 @@ const Header = () => {
               <h1>Multimart</h1>
             </div>
           </div>
-          <div className='navigation'>
+          <div className='navigation' ref={menuRef} onClick={menuToggle}>
             <ul className='menu'>
               {
                 nav__links.map((item, index)=>(
@@ -85,11 +89,12 @@ const Header = () => {
             <span>
               <motion.img whileTap={{scale:1.2}} src={userIcon} alt="user-icon"/>
               </span>
-          </div>
-          <div className="mobile__menu">
-            <span>
+
+            <div className="mobile__menu">
+            <span onClick={menuToggle}>
               <i className="ri-menu-line"></i>
             </span>
+          </div>
           </div>
         </div>
       </Row>

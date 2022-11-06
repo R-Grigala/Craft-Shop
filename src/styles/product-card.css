@@ -29,3 +29,19 @@
     color: #fff;
     border-radius: 50px;
 }
+
+@media only screen and (max-width: 992px) {
+    .product__info h3 a {
+        font-style: 1.1rem;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .product__info h3 a {
+        font-style: 1.1rem;
+    }
+
+    .product__card-bottom span i {
+        font-style: 1rem;
+    }
+}

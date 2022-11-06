@@ -58,3 +58,39 @@
 .store__btn a:hover {
     color: var(--primary-color);
 }
+
+@media only screen and (max-width: 992px){
+    .hero__content h2 {
+        font-size: 2rem;
+    }
+
+    .section__title {
+        font-style: 1.7rem;
+    }
+}
+
+@media only screen and (max-width: 768px){
+    .hero__content h2 {
+        font-size: 1.6rem;
+    }
+    
+    .hero__content p {
+        font-style: 0.9rem;
+    }
+
+    .buy__btn {
+        font-size: 0.9rem;
+    }
+
+    .section__title {
+        font-style: 1.4rem;
+    }
+}
+
+@media only screen and (max-width: 576px){
+    .hero__content {
+        padding-top: 0;
+        margin-bottom: 40px;
+
+    }
+}

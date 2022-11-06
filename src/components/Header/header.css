@@ -114,6 +114,7 @@
         height: 100%;
         background: rgba(0, 0, 0, 0.53);
         z-index: 9999;
+        display: none;
     }
 
     .menu {
@@ -124,5 +125,44 @@
         height: 100%;
         background: #fff;
         z-index: 99999;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .active__menu {
+        display: block;
+    }
+
+    .mobile__menu {
+        display: block;
+    }
+
+    .mobile__menu span i {
+        font-size: 1.1rem !important;
+    }
+
+    .logo img {
+        width: 1rem;
+        height: 1rem;
+    }
+    .logo h1 {
+        font-size: 1rem;
+    }
+
+    .fav__icon i, 
+    .cart__icon i {
+        font-size: 1.2rem !important;
+    }
+
+    .nav__icons span img {
+        width: 1.4rem;
+        height: 1.4rem;
+    }
+
+    .header {
+        width: 100%;
+        height: 60px;
+        line-height: 60px;
     }
 }
