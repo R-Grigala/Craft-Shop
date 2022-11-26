@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import '../../styles/product-card.css';
 import { Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { useDispatch } from "react-redux"
 import { cartActions } from '../../redux/slices/cartSlice';
@@ -23,7 +24,7 @@ const ProductCard = ({item}) => {
             })
         );
         
-        alert("product added to the cart");
+        toast.success('Product added successfully');
     }
 
     return (

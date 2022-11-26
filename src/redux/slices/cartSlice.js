@@ -40,6 +40,7 @@ const cartSlice = createSlice({
         
         console.log(state.totalQuantity);
         console.log(state.cartItems);
+        console.log(newItem);
     },
   },
 });
