@@ -4,6 +4,8 @@ import CommonSection from "../components/UI/CommonSection";
 import Helmet from "../components/Helmet/Helmet";
 import { Container, Row, Col } from "reactstrap";
 
+import '../styles/shop.css';
+
 const Shop = () => {
   return(
     <Helmet title="Shop">
@@ -35,7 +37,7 @@ const Shop = () => {
             </Col>
             <Col lg='6' md='6'>
               <div className="search__box">
-                <input type="text" placeholder="Search......" />
+                <input type="text" placeholder="Search ......" />
                 <span>
                   <i class="ri-search-line"></i>
                 </span>
