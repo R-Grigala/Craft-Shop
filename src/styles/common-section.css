@@ -1,6 +1,10 @@
 .common__section {
-    background: linear-gradient(rgba(0, 0, 0, 0.562), rgba(0, 0, 0, 0.562)),url('../assets/images/common-section-bg.jpg') no-repeat center center;
-    background-size: contain;
+    background: linear-gradient(rgba(0, 0, 0, 0.562), rgba(0, 0, 0, 0.562)),url('../assets/images/table.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 100px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .common__section h1 {
