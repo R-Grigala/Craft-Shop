@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState } from 'react';
 
 import { Container, Row, Col } from 'reactstrap';
 import { useParams } from 'react-router-dom';
@@ -10,6 +10,8 @@ import { motion } from 'framer-motion';
 import '../styles/product-details.css'
 
 const ProductDetails = () => {
+
+  const [tab, setTab] = useState('desc')
 
   const {id} = useParams()
   const product = products.find(item => item.id === id)
@@ -68,12 +70,49 @@ const ProductDetails = () => {
           <Row>
             <Col lg='12'>
               <div className="tab__wrapper d-flex align-items-center gap-5">
-                <h6>Description</h6>
-                <h6>Reviews ({reviews.length})</h6>
+                <h6 className={`${tab === 'desc' ? 'active__tab' : ''}`} 
+                  onClick={() => setTab('desc')}>Description</h6>
+                <h6 className={`${tab === 'rev' ? 'active__tab' : ''}`}
+                  onClick={() => setTab('rev')}>Reviews ({reviews.length})</h6>
               </div>
-              <div className="tab__content mt-5">
-                <p>{description}</p>
-              </div>
+
+              {tab==='desc' ? (
+                <div className="tab__content mt-5">
+                  <p>{description}</p>
+                </div>
+                ):(
+                  <dev className="product__review mt-5">
+                    <div className="reviews__wrapper">
+                      <ul>
+                        {reviews?.map((item, index) => (
+                          <li key={index} className='mb-4'>
+                            <h6>Jhon Doe</h6>
+                            <span>({item.rating} rating)</span>
+                            <p>{item.text}</p>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="review__form">
+                        <h4>Leave your experience</h4>
+                        <form action=''>
+                          <div className='form__group'>
+                            <input type='text' placeholder='Enter name'/>
+                          </div>
+                          <div className='form__group'>
+                            <span>1<i class="ri-star-fill"></i></span>
+                            <span>2<i class="ri-star-fill"></i></span>
+                            <span>3<i class="ri-star-fill"></i></span>
+                            <span>4<i class="ri-star-fill"></i></span>
+                            <span>5<i class="ri-star-fill"></i></span>
+                          </div>
+                          <div className='form__group'>
+                            <textarea rows={4} type='text' placeholder='Review Message...'/>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </dev>
+              )}
             </Col>
           </Row>
         </Container>
