@@ -78,4 +78,20 @@
     column-gap: 5px;
     color: coral;
     font-weight: 600;
+    cursor: pointer;
+}
+
+.related__title{
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 30px;
+}
+
+@media only screen and(max-width:768px){
+    .product__details h2 {
+        font-size: 1.3rem;
+    }
+    .rating__group{
+        column-gap: 1rem !important;
+    }
 }
