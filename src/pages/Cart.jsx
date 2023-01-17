@@ -4,9 +4,16 @@ import Helmet from '../components/Helmet/Helmet';
 import CommonSection from '../components/UI/CommonSection';
 import { Container, Row, Col } from 'reactstrap';
 
-import tdImg from '../assets/images/arm-chair-01.jpg'
+import tdImg from '../assets/images/arm-chair-01.jpg';
+import { motion } from 'framer-motion';
+import { cartActions } from '../redux/slices/cartSlice';
+import { useSelector, useDispatch } from 'react-redux';
+
 
 const Cart = () => {
+
+  const cartItems = useSelector(state => state.cart.cartItems)
+
   return (
     <Helmet title>
       <CommonSection title="Shopping Cart"/>
@@ -14,7 +21,9 @@ const Cart = () => {
         <Container>
           <Row>
             <Col lg='9'>
-              <table className='table bordered'>
+              {cartItems.length === 0 ? ( <h2 className='fs-4 text-center'>No Item added to the cart</h2>
+                ):(
+                <table className='table bordered'>
                 <thead>
                   <tr>
                     <th>Image</th>
@@ -35,6 +44,8 @@ const Cart = () => {
                   </tr>
                 </tbody>
               </table>
+              )}
+              
             </Col>
             <Col lg='3'></Col>
           </Row>
