@@ -35,13 +35,21 @@ const Cart = () => {
                 </thead>
 
                 <tbody>
-                  <tr>
-                    <td><img src={tdImg} alt=''/></td>
-                    <td>Modern Arm Chair</td>
-                    <td>$299</td>
-                    <td>2px</td>
-                    <td><i className="ri-delete-bin-line"></i></td>
-                  </tr>
+                  {
+                    cartItems.map((item, index)=>(
+                      <tr key={index}>
+                        <td>
+                          <img src={item.imgUrl} alt='Item_Image'/>
+                        </td>
+                        <td>{item.productName}</td>
+                        <td>${item.price}</td>
+                        <td>{item.quantity}px</td>
+                        <td>
+                          <i className="ri-delete-bin-line"></i>
+                        </td>
+                      </tr>
+                    ))
+                  }
                 </tbody>
               </table>
               )}
