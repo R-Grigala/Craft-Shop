@@ -9,6 +9,21 @@
     border-radius: 5px;
 }
 
+.buy__btn {
+    border: none;
+    outline: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 40px;
+}
+
+.buy__btn a:hover {
+    color: #fff;
+}
 .checkout__cart h6, h4{
     display: flex;
     align-items: center;
