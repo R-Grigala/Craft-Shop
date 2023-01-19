@@ -3,6 +3,9 @@ import Helmet from '../components/Helmet/Helmet';
 import { Container, Row, Col, Form, FormGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase.config';
+
 import '../styles/login.css';
 
 const Singup = () => {
@@ -11,7 +14,24 @@ const Singup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
+  const signup = async(e) => {
+    e.preventDefault();
+    setLoading(true)
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const user = userCredential.user;
+      console.log(user);
+
+    } catch (error) {}
+  };
 
   return (
     <Helmet title='Singup'>
@@ -21,12 +41,12 @@ const Singup = () => {
             <Col lg='6' className='m-auto text-center'>
               <h3 className='fw-bold mb-4'>Singup</h3>
 
-              <Form className='auth__form'>
+              <Form className='auth__form' onSubmit={signup}>
                 <FormGroup className='form__group'>
                   <input 
                     type='text' 
                     placeholder='Username'
-                    value={username} 
+                    defaultValue={username} 
                     onClick={e => setUsername(e.target.value)}
                   />
                 </FormGroup>
@@ -34,8 +54,8 @@ const Singup = () => {
                 <FormGroup className='form__group'>
                   <input 
                     type='email' 
-                    placeholder='Enter your Email'
-                    value={email} 
+                    placeholder='Enter your Email' 
+                    defaultValue={email} 
                     onClick={e => setEmail(e.target.value)}
                   />
                 </FormGroup>
@@ -44,7 +64,7 @@ const Singup = () => {
                   <input 
                     type='password' 
                     placeholder='Enter your password'
-                    value={password} 
+                    defaultValue={password} 
                     onClick={e => setPassword(e.target.value)}
                   />
                 </FormGroup>
