@@ -3,34 +3,46 @@ import Helmet from '../components/Helmet/Helmet';
 import { Container, Row, Col, Form, FormGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebaseConfig';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { app } from '../firebaseConfig';
 
 import '../styles/login.css';
 
 const Singup = () => {
 
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
+ 
+  const [data, setData] = useState({
+    username: '',
+    email: '',
+    password: ''
+  })
+
+  const handleInputs = (event) => {
+    let inputs = {[event.target.name] : event.target.value}
+
+    setData({...data, ...inputs})
+  }
 
   const signup = async(e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
 
     try {
+      console.log("start")
+      const auth = getAuth(app);
+      console.log("MID")
       const userCredential = await createUserWithEmailAndPassword(
         auth,
-        email,
-        password
+        data.email,
+        data.password
       );
-
+      console.log("end")
       const user = userCredential.user;
       console.log(user);
 
-    } catch (error) {}
+    } catch(error) {}
   };
 
   return (
@@ -46,8 +58,7 @@ const Singup = () => {
                   <input 
                     type='text' 
                     placeholder='Username'
-                    defaultValue={username} 
-                    onClick={e => setUsername(e.target.value)}
+                    onClick={e => handleInputs(e)}
                   />
                 </FormGroup>
 
@@ -55,8 +66,7 @@ const Singup = () => {
                   <input 
                     type='email' 
                     placeholder='Enter your Email' 
-                    defaultValue={email} 
-                    onClick={e => setEmail(e.target.value)}
+                    onClick={e => handleInputs(e)}
                   />
                 </FormGroup>
 
@@ -64,8 +74,7 @@ const Singup = () => {
                   <input 
                     type='password' 
                     placeholder='Enter your password'
-                    defaultValue={password} 
-                    onClick={e => setPassword(e.target.value)}
+                    onClick={e => handleInputs(e)}
                   />
                 </FormGroup>
 
