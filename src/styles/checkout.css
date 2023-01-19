@@ -9,7 +9,7 @@
     border-radius: 5px;
 }
 
-.buy__btn {
+.checkout__btn {
     border: none;
     outline: none;
     padding: 8px 20px;
@@ -21,7 +21,7 @@
     margin-top: 40px;
 }
 
-.buy__btn a:hover {
+.checkout__btn a:hover {
     color: #fff;
 }
 .checkout__cart h6, h4{
@@ -35,6 +35,6 @@
 }
 
 .checkout__cart h4{
-    border: 1px solid rgba(221, 221, 221, 0.253);
+    border-top: 1px solid rgba(221, 221, 221, 0.253);
     padding-top: 20px;
 }
