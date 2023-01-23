@@ -3,8 +3,15 @@ import Helmet from '../components/Helmet/Helmet';
 import { Container, Row, Col, Form, FormGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
+
+import { ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
+import { setDoc, doc } from 'firebase/firestore';
+
 import { auth } from '../firebaseConfig';
+import { storage } from '../firebaseConfig';
+import { toast } from 'react-toastify';
+import { db } from '../firebaseConfig';
 
 import '../styles/login.css';
 
@@ -25,13 +32,41 @@ const Singup = () => {
   }
 
   const handleSubmit = () => {
-    createUserWithEmailAndPassword(auth, data.email, data.password)
-    .then((response) => {
-      console.log(response.user)
-    })
-    .catch((err) => {
-      alert(err.message)
-    })
+    try {
+      createUserWithEmailAndPassword(auth, data.email, data.password)
+      .then((response) => {
+        console.log(response.user)
+      })
+      .catch((error) => {
+        toast.error("something went wrong");
+      })
+      
+      // const storageRef = ref(storage, `images/${Date.now() + data.username}`)
+      // const uploadTask = uploadBytesResumable(storageRef, file)
+
+      // uploadTask.on((error) => {
+      //   toast.error(error.message)
+      // },
+      // () => {
+      //   getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
+      //     updateProfile(user, {
+      //       displayName: data.username,
+      //       photoURL: downloadURL,
+      //     });
+
+      //     await setDoc(doc(db, "users", user.uid),{
+      //       uid: user.uid,
+      //       displayName: data.username,
+      //       email : data.email,
+      //       photoURL: downloadURL,
+      //     })
+      //   })
+      // })
+      
+    } catch (error){
+      toast.error("something went wrong")
+    }
+
   };
 
   return (
