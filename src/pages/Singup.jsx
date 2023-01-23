@@ -3,20 +3,20 @@ import Helmet from '../components/Helmet/Helmet';
 import { Container, Row, Col, Form, FormGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { app } from '../firebaseConfig';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebaseConfig';
 
 import '../styles/login.css';
 
 const Singup = () => {
+
+  const [file, setFile] = useState("");
  
   const [data, setData] = useState({
-    username: '',
-    email: '',
-    password: ''
+    username: "",
+    email: "",
+    password: ""
   })
-
-  const auth = getAuth(app);
 
   const handleInputs = (event) => {
     let inputs = {[event.target.name] : event.target.value}
@@ -71,11 +71,18 @@ const Singup = () => {
                     onChange={event => handleInputs(event)}
                     />
                 </FormGroup>
+                <FormGroup className="form__group">
+                  <input 
+                    type="file"
+                    onClick={(e) => setFile(e.target.file[0])}
+                  />
+                </FormGroup>
                 {/* <button onClick={handleSubmit}>Sing Up</button> */}
-                <button onClick={handleSubmit} className="buy__btn auth__btn">Create an Account</button>
+                <button onClick={handleSubmit} className="buy__btn auth__btn">
+                  Create an Account
+                </button>
                 <p>
-                  Already have an acount?
-                  <Link to='/login'> Login</Link>
+                  Already have an acount? <Link to='/login'> Login</Link>
                 </p>
               </Form>
             </Col>
