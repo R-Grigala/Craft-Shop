@@ -9,9 +9,6 @@ import { app } from '../firebaseConfig';
 import '../styles/login.css';
 
 const Singup = () => {
-
-  const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(false);
  
   const [data, setData] = useState({
     username: '',
@@ -19,30 +16,22 @@ const Singup = () => {
     password: ''
   })
 
+  const auth = getAuth(app);
+
   const handleInputs = (event) => {
     let inputs = {[event.target.name] : event.target.value}
 
     setData({...data, ...inputs})
   }
 
-  const signup = async(e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      console.log("start")
-      const auth = getAuth(app);
-      console.log("MID")
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      );
-      console.log("end")
-      const user = userCredential.user;
-      console.log(user);
-
-    } catch(error) {}
+  const handleSubmit = () => {
+    createUserWithEmailAndPassword(auth, data.email, data.password)
+    .then((response) => {
+      console.log(response.user)
+    })
+    .catch((err) => {
+      alert(err.message)
+    })
   };
 
   return (
@@ -53,40 +42,37 @@ const Singup = () => {
             <Col lg='6' className='m-auto text-center'>
               <h3 className='fw-bold mb-4'>Singup</h3>
 
-              <Form className='auth__form' onSubmit={signup}>
-                <FormGroup className='form__group'>
+              <Form className="auth__form">
+
+              <FormGroup className="form__group">
                   <input 
-                    type='text' 
-                    placeholder='Username'
-                    onClick={e => handleInputs(e)}
-                  />
+                    placeholder="Username" 
+                    name="username" 
+                    type="namusername"
+                    className="form__group"
+                    onChange={event => handleInputs(event)}
+                    />
                 </FormGroup>
-
-                <FormGroup className='form__group'>
+                <FormGroup className="form__group">
                   <input 
-                    type='email' 
-                    placeholder='Enter your Email' 
-                    onClick={e => handleInputs(e)}
-                  />
+                    placeholder="Enter your Email" 
+                    name="email" 
+                    type="email"
+                    className="form__group"
+                    onChange={event => handleInputs(event)}
+                    />
                 </FormGroup>
-
-                <FormGroup className='form__group'>
+                <FormGroup className="form__group">
                   <input 
-                    type='password' 
-                    placeholder='Enter your password'
-                    onClick={e => handleInputs(e)}
-                  />
+                    placeholder="Password" 
+                    name="password" 
+                    type="password"
+                    className="form__group"
+                    onChange={event => handleInputs(event)}
+                    />
                 </FormGroup>
-
-                <FormGroup className='form__group'>
-                  <input 
-                    type='file'
-
-                    onClick={e => setFile(e.target.files[0])}
-                  />
-                </FormGroup>
-
-                <button type='submit' className="buy__btn auth__btn">Create an Account</button>
+                {/* <button onClick={handleSubmit}>Sing Up</button> */}
+                <button onClick={handleSubmit} className="buy__btn auth__btn">Create an Account</button>
                 <p>
                   Already have an acount?
                   <Link to='/login'> Login</Link>
