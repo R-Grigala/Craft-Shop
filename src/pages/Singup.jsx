@@ -18,7 +18,8 @@ import '../styles/login.css';
 const Singup = () => {
 
   const [file, setFile] = useState(null);
-
+  // const [loading, setLoading] = useState(false);
+ 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,35 +38,40 @@ const Singup = () => {
   //   }
   // }
 
-  const handleSubmit = async () => {
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    // setLoading(true);
+
     try {
 
       const userCredential = await createUserWithEmailAndPassword(auth, email, password)
       const user = userCredential.user;
-      console.log(user);
-      
+
       const storageRef = ref(storage, `images/${Date.now() + username}`);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
-      uploadTask.on((error) => {
-        toast.error(error.message)
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
-          updateProfile(user, {
-            displayName: username,
-            photoURL: downloadURL,
-          });
+      uploadTask.on(
+        (error) => {
+          toast.error(error.message)
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async(
+            downloadURL) => {
+              await updateProfile(user, {
+                displayName: username,
+                photoURL: downloadURL,
+              });
 
-          await setDoc(doc(db, 'users', user.uid),{
-            uid: user.uid,
-            displayName: username,
-            email,
-            photoURL: downloadURL,
-          })
-        })
-      })
-      
+            await setDoc(doc(db, "users", user.uid),{
+              uid: user.uid,
+              displayName: username,
+              email,
+              photoURL: downloadURL,
+            });
+          });
+        }
+     );
+     console.log(user);
     } catch (error){
       toast.error("something went wrong")
     }
@@ -86,7 +92,7 @@ const Singup = () => {
                     placeholder="Username" 
                     type="text"
                     className="form__group"
-                    onChange={e => setUsername(e.target.value)}
+                    onChange={(e) => setUsername(e.target.value)}
                     />
                 </FormGroup>
                 <FormGroup className="form__group">
@@ -94,7 +100,7 @@ const Singup = () => {
                     placeholder="Enter your Email" 
                     type="email"
                     className="form__group"
-                    onChange={e => setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                     />
                 </FormGroup>
                 <FormGroup className="form__group">
@@ -102,13 +108,13 @@ const Singup = () => {
                     placeholder="Enter your Password" 
                     type="password"
                     className="form__group"
-                    onChange={e => setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                     />
                 </FormGroup>
                 <FormGroup className="form__group">
                   <input 
                     type="file"
-                    onClick={(e) => setFile(e.target.file[0])}
+                    onClick={(e) => setFile(e.target.file?.[0])}
                   />
                 </FormGroup>
                 {/* <button onClick={handleSubmit}>Sing Up</button> */}
