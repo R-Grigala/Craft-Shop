@@ -17,51 +17,54 @@ import '../styles/login.css';
 
 const Singup = () => {
 
-  const [file, setFile] = useState("");
- 
-  const [data, setData] = useState({
-    username: "",
-    email: "",
-    password: ""
-  })
+  const [file, setFile] = useState(null);
 
-  const handleInputs = (event) => {
-    let inputs = {[event.target.name] : event.target.value}
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    setData({...data, ...inputs})
-  }
+  // const handleInputs = (event) => {
+  //   let inputs = {[event.target.name] : event.target.value}
 
-  const handleSubmit = () => {
+  //   setData({...data, ...inputs})
+  // }
+
+  // const singup = async(e) => {
+  //   try {
+
+  //   } catch (error) {
+  //     toast.error("something went wrong");
+  //   }
+  // }
+
+  const handleSubmit = async () => {
     try {
-      createUserWithEmailAndPassword(auth, data.email, data.password)
-      .then((response) => {
-        console.log(response.user)
-      })
-      .catch((error) => {
-        toast.error("something went wrong");
-      })
+
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+      const user = userCredential.user;
+      console.log(user);
       
-      // const storageRef = ref(storage, `images/${Date.now() + data.username}`)
-      // const uploadTask = uploadBytesResumable(storageRef, file)
+      const storageRef = ref(storage, `images/${Date.now() + username}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
-      // uploadTask.on((error) => {
-      //   toast.error(error.message)
-      // },
-      // () => {
-      //   getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
-      //     updateProfile(user, {
-      //       displayName: data.username,
-      //       photoURL: downloadURL,
-      //     });
+      uploadTask.on((error) => {
+        toast.error(error.message)
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
+          updateProfile(user, {
+            displayName: username,
+            photoURL: downloadURL,
+          });
 
-      //     await setDoc(doc(db, "users", user.uid),{
-      //       uid: user.uid,
-      //       displayName: data.username,
-      //       email : data.email,
-      //       photoURL: downloadURL,
-      //     })
-      //   })
-      // })
+          await setDoc(doc(db, 'users', user.uid),{
+            uid: user.uid,
+            displayName: username,
+            email,
+            photoURL: downloadURL,
+          })
+        })
+      })
       
     } catch (error){
       toast.error("something went wrong")
@@ -77,33 +80,29 @@ const Singup = () => {
             <Col lg='6' className='m-auto text-center'>
               <h3 className='fw-bold mb-4'>Singup</h3>
 
-              <Form className="auth__form">
-
-              <FormGroup className="form__group">
+              <Form className="auth__form" onSubmit={handleSubmit}>
+                <FormGroup className="form__group">
                   <input 
                     placeholder="Username" 
-                    name="username" 
-                    type="namusername"
+                    type="text"
                     className="form__group"
-                    onChange={event => handleInputs(event)}
+                    onChange={e => setUsername(e.target.value)}
                     />
                 </FormGroup>
                 <FormGroup className="form__group">
                   <input 
                     placeholder="Enter your Email" 
-                    name="email" 
                     type="email"
                     className="form__group"
-                    onChange={event => handleInputs(event)}
+                    onChange={e => setEmail(e.target.value)}
                     />
                 </FormGroup>
                 <FormGroup className="form__group">
                   <input 
-                    placeholder="Password" 
-                    name="password" 
+                    placeholder="Enter your Password" 
                     type="password"
                     className="form__group"
-                    onChange={event => handleInputs(event)}
+                    onChange={e => setPassword(e.target.value)}
                     />
                 </FormGroup>
                 <FormGroup className="form__group">
@@ -113,7 +112,7 @@ const Singup = () => {
                   />
                 </FormGroup>
                 {/* <button onClick={handleSubmit}>Sing Up</button> */}
-                <button onClick={handleSubmit} className="buy__btn auth__btn">
+                <button type='submit' className="buy__btn auth__btn">
                   Create an Account
                 </button>
                 <p>
