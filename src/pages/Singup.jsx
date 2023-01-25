@@ -24,7 +24,8 @@ const Singup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async() => {
+  const handleSubmit = async(e) => {
+    e.preventDefault();
     // setLoading(true);
 
     try {
@@ -37,12 +38,12 @@ const Singup = () => {
       
       const user = userCredential.user;
 
-      const storageRef = await ref(storage, `images/${Date.now() + username}`);
+      const storageRef = ref(storage, `images/${Date.now() + username}`);
       // const uploadTask = uploadBytesResumable(storageRef, file)
 
       // uploadTask.on(
       //   (error) => {
-      //     toast.error(error.message)
+      //     toast.error(error.message);
       //   },
       //   () => {
       //     getDownloadURL(uploadTask.snapshot.ref).then(async(
@@ -64,19 +65,19 @@ const Singup = () => {
 
       const uploadTask = uploadBytesResumable(storageRef, file).then(
         () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async(
-            downloadURL) => {
+          getDownloadURL(uploadTask.snapshot.ref).then(
+            async(downloadURL) => {
               await updateProfile(user, {
                 displayName: username,
                 photoURL: downloadURL,
               });
               
               await setDoc(doc(db, "users", user.uid),{
-              uid: user.uid,
-              displayName: username,
-              email: email,
-              photoURL: downloadURL,
-            });
+                uid: user.uid,
+                displayName: username,
+                email,
+                photoURL: downloadURL,
+              });
             }
           )
         }
