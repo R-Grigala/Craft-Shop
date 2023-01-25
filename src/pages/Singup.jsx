@@ -24,36 +24,45 @@ const Singup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // const handleInputs = (event) => {
-  //   let inputs = {[event.target.name] : event.target.value}
-
-  //   setData({...data, ...inputs})
-  // }
-
-  // const singup = async(e) => {
-  //   try {
-
-  //   } catch (error) {
-  //     toast.error("something went wrong");
-  //   }
-  // }
-
-  const handleSubmit = async(e) => {
-    e.preventDefault();
+  const handleSubmit = async() => {
     // setLoading(true);
 
     try {
 
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+      const userCredential = await createUserWithEmailAndPassword(
+        auth, 
+        email, 
+        password
+      );
+      
       const user = userCredential.user;
 
-      const storageRef = ref(storage, `images/${Date.now() + username}`);
-      const uploadTask = uploadBytesResumable(storageRef, file);
+      const storageRef = await ref(storage, `images/${Date.now() + username}`);
+      // const uploadTask = uploadBytesResumable(storageRef, file)
 
-      uploadTask.on(
-        (error) => {
-          toast.error(error.message)
-        },
+      // uploadTask.on(
+      //   (error) => {
+      //     toast.error(error.message)
+      //   },
+      //   () => {
+      //     getDownloadURL(uploadTask.snapshot.ref).then(async(
+      //       downloadURL) => {
+      //         await updateProfile(user, {
+      //           displayName: username,
+      //           photoURL: downloadURL,
+      //         });
+
+      //       await setDoc(doc(db, "users", user.uid),{
+      //         uid: user.uid,
+      //         displayName: username,
+      //         email: email,
+      //         photoURL: downloadURL,
+      //       });
+      //     });
+      //   }
+      // );
+
+      const uploadTask = uploadBytesResumable(storageRef, file).then(
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async(
             downloadURL) => {
@@ -61,17 +70,19 @@ const Singup = () => {
                 displayName: username,
                 photoURL: downloadURL,
               });
-
-            await setDoc(doc(db, "users", user.uid),{
+              
+              await setDoc(doc(db, "users", user.uid),{
               uid: user.uid,
               displayName: username,
-              email,
+              email: email,
               photoURL: downloadURL,
             });
-          });
+            }
+          )
         }
-     );
-     console.log(user);
+      );
+
+      console.log(user);
     } catch (error){
       toast.error("something went wrong")
     }
