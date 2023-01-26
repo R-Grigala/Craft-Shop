@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
 
 import { ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
-import { setDoc, doc } from 'firebase/firestore';
+import { setDoc, doc, } from 'firebase/firestore';
 
 import { auth } from '../firebaseConfig';
 import { storage } from '../firebaseConfig';
@@ -39,31 +39,27 @@ const Singup = () => {
       const user = userCredential.user;
 
       const storageRef = ref(storage, `images/${Date.now() + username}`);
-      
-      // const uploadTask = uploadBytesResumable(storageRef, file)
-      // uploadTask.on(
-      //   (error) => {
-      //     toast.error(error.message);
-      //   },
-      //   () => {
-      //     getDownloadURL(uploadTask.snapshot.ref).then(async(
-      //       downloadURL) => {
-      //         await updateProfile(user, {
-      //           displayName: username,
-      //           photoURL: downloadURL,
-      //         });
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
-      //       await setDoc(doc(db, "users", user.uid),{
-      //         uid: user.uid,
-      //         displayName: username,
-      //         email,
-      //         photoURL: downloadURL,
-      //       });
-      //     });
-      //   }
-      // );
-
-      const uploadTask = uploadBytesResumable(storageRef, file).then(
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case 'paused':
+              console.log('Upload is paused');
+              break;
+            case 'running':
+              console.log('Upload is running');
+              break;
+            default:
+              console.log('Upload is Error');
+              break;
+          }
+        },
+        (error) => {
+          toast.error(error.message);
+        },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(
             async(downloadURL) => {
@@ -82,6 +78,26 @@ const Singup = () => {
           )
         }
       );
+
+      // const uploadTask = uploadBytesResumable(storageRef, file).then(
+      //   () => {
+      //     getDownloadURL(uploadTask.snapshot.ref).then(
+      //       async(downloadURL) => {
+      //         await updateProfile(user, {
+      //           displayName: username,
+      //           photoURL: downloadURL,
+      //         });
+              
+      //         await setDoc(doc(db, "users", user.uid),{
+      //           uid: user.uid,
+      //           displayName: username,
+      //           email,
+      //           photoURL: downloadURL,
+      //         });
+      //       }
+      //     )
+      //   }
+      // );
 
       console.log(user);
     } catch (error){
