@@ -39,8 +39,8 @@ const Singup = () => {
       const user = userCredential.user;
 
       const storageRef = ref(storage, `images/${Date.now() + username}`);
+      
       // const uploadTask = uploadBytesResumable(storageRef, file)
-
       // uploadTask.on(
       //   (error) => {
       //     toast.error(error.message);
@@ -56,7 +56,7 @@ const Singup = () => {
       //       await setDoc(doc(db, "users", user.uid),{
       //         uid: user.uid,
       //         displayName: username,
-      //         email: email,
+      //         email,
       //         photoURL: downloadURL,
       //       });
       //     });
