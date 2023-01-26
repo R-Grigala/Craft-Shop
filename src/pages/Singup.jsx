@@ -14,22 +14,24 @@ import { toast } from 'react-toastify';
 import { db } from '../firebaseConfig';
 
 import '../styles/login.css';
+import { useNavigate } from 'react-router-dom';
 
 const Singup = () => {
 
   const [file, setFile] = useState(null);
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
  
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const handleSubmit = async(e) => {
     e.preventDefault();
-    // setLoading(true);
+    setLoading(true);
 
     try {
-
       const userCredential = await createUserWithEmailAndPassword(
         auth, 
         email, 
@@ -79,28 +81,12 @@ const Singup = () => {
         }
       );
 
-      // const uploadTask = uploadBytesResumable(storageRef, file).then(
-      //   () => {
-      //     getDownloadURL(uploadTask.snapshot.ref).then(
-      //       async(downloadURL) => {
-      //         await updateProfile(user, {
-      //           displayName: username,
-      //           photoURL: downloadURL,
-      //         });
-              
-      //         await setDoc(doc(db, "users", user.uid),{
-      //           uid: user.uid,
-      //           displayName: username,
-      //           email,
-      //           photoURL: downloadURL,
-      //         });
-      //       }
-      //     )
-      //   }
-      // );
+      setLoading(false);
+      toast.success('Account created');
+      navigate('/login');
 
-      console.log(user);
     } catch (error){
+      setLoading(false);
       toast.error("something went wrong")
     }
 
@@ -111,49 +97,55 @@ const Singup = () => {
       <section>
         <Container>
           <Row>
-            <Col lg='6' className='m-auto text-center'>
-              <h3 className='fw-bold mb-4'>Singup</h3>
+            {loading? (
+              <Col lg='12' className='text-center'><h5 
+                className='fw-bold'>Loading.....</h5>
+              </Col>
+            ):(
+              <Col lg='6' className='m-auto text-center'>
+                <h3 className='fw-bold mb-4'>Singup</h3>
 
-              <Form className="auth__form" onSubmit={handleSubmit}>
-                <FormGroup className="form__group">
-                  <input 
-                    placeholder="Username" 
-                    type="text"
-                    className="form__group"
-                    onChange={(e) => setUsername(e.target.value)}
+                <Form className="auth__form" onSubmit={handleSubmit}>
+                  <FormGroup className="form__group">
+                    <input 
+                      placeholder="Username" 
+                      type="text"
+                      className="form__group"
+                      onChange={(e) => setUsername(e.target.value)}
+                      />
+                  </FormGroup>
+                  <FormGroup className="form__group">
+                    <input 
+                      placeholder="Enter your Email" 
+                      type="email"
+                      className="form__group"
+                      onChange={(e) => setEmail(e.target.value)}
+                      />
+                  </FormGroup>
+                  <FormGroup className="form__group">
+                    <input 
+                      placeholder="Enter your Password" 
+                      type="password"
+                      className="form__group"
+                      onChange={(e) => setPassword(e.target.value)}
+                      />
+                  </FormGroup>
+                  <FormGroup className="form__group">
+                    <input 
+                      type="file"
+                      onClick={(e) => setFile(e.target.file?.[0])}
                     />
-                </FormGroup>
-                <FormGroup className="form__group">
-                  <input 
-                    placeholder="Enter your Email" 
-                    type="email"
-                    className="form__group"
-                    onChange={(e) => setEmail(e.target.value)}
-                    />
-                </FormGroup>
-                <FormGroup className="form__group">
-                  <input 
-                    placeholder="Enter your Password" 
-                    type="password"
-                    className="form__group"
-                    onChange={(e) => setPassword(e.target.value)}
-                    />
-                </FormGroup>
-                <FormGroup className="form__group">
-                  <input 
-                    type="file"
-                    onClick={(e) => setFile(e.target.file?.[0])}
-                  />
-                </FormGroup>
-                {/* <button onClick={handleSubmit}>Sing Up</button> */}
-                <button type='submit' className="buy__btn auth__btn">
-                  Create an Account
-                </button>
-                <p>
-                  Already have an acount? <Link to='/login'> Login</Link>
-                </p>
-              </Form>
-            </Col>
+                  </FormGroup>
+                  {/* <button onClick={handleSubmit}>Sing Up</button> */}
+                  <button type='submit' className="buy__btn auth__btn">
+                    Create an Account
+                  </button>
+                  <p>
+                    Already have an acount? <Link to='/login'> Login</Link>
+                  </p>
+                </Form>
+              </Col>
+            )}
           </Row>
         </Container>
       </section>
