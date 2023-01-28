@@ -97,7 +97,7 @@ const Singup = () => {
       <section>
         <Container>
           <Row>
-            {loading? (
+            {loading ? (
               <Col lg='12' className='text-center'><h5 
                 className='fw-bold'>Loading.....</h5>
               </Col>
@@ -110,7 +110,6 @@ const Singup = () => {
                     <input 
                       placeholder="Username" 
                       type="text"
-                      className="form__group"
                       onChange={(e) => setUsername(e.target.value)}
                       />
                   </FormGroup>
@@ -118,7 +117,6 @@ const Singup = () => {
                     <input 
                       placeholder="Enter your Email" 
                       type="email"
-                      className="form__group"
                       onChange={(e) => setEmail(e.target.value)}
                       />
                   </FormGroup>
@@ -126,7 +124,6 @@ const Singup = () => {
                     <input 
                       placeholder="Enter your Password" 
                       type="password"
-                      className="form__group"
                       onChange={(e) => setPassword(e.target.value)}
                       />
                   </FormGroup>
@@ -136,7 +133,7 @@ const Singup = () => {
                       onClick={(e) => setFile(e.target.file?.[0])}
                     />
                   </FormGroup>
-                  {/* <button onClick={handleSubmit}>Sing Up</button> */}
+                  
                   <button type='submit' className="buy__btn auth__btn">
                     Create an Account
                   </button>
