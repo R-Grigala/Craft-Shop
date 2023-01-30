@@ -32,7 +32,7 @@ const nav__links = [
 const Header = () => {
 
   const headerRef = useRef(null);
-  const totalQuantity = useSelector(state=> state.cart.totalQuantity);
+  const totalQuantity = useSelector((state)=> state.cart.totalQuantity);
   const profileActionRef = useRef(null);
 
   const menuRef = useRef(null);
@@ -66,11 +66,7 @@ const Header = () => {
     navigate("/cart");
   };
 
-  const toggleProfileActions = ()=> {
-    if (profileActionRef !== null){
-      profileActionRef.current.classList.toggle('show__profileActions')
-    }
-  }
+  const toggleProfileActions = ()=> profileActionRef.current.classList.toggle('show__profileActions')
 
   return <header className='header' ref={headerRef}>
     <Container>
@@ -117,12 +113,14 @@ const Header = () => {
                 ref={profileActionRef} 
                 onClick={toggleProfileActions}
               >
-                {
-                  currentUser ? <span>Logout</span> : <div>
+                {currentUser ? ( 
+                  <span>Logout</span> 
+                ) : ( 
+                  <div>
                     <Link to='/signup'>Signup</Link>
                     <Link to='/login'>Login</Link>
                   </div>
-                }
+                )}
               </div>
             </div>
 

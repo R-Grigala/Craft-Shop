@@ -130,7 +130,7 @@ const Singup = () => {
                   <FormGroup className="form__group">
                     <input 
                       type="file"
-                      onClick={(e) => setFile(e.target.file?.[0])}
+                      onClick={(e) => setFile(e.target.file[0])}
                     />
                   </FormGroup>
                   
