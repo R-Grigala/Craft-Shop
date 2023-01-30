@@ -21,9 +21,9 @@ const Singup = () => {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
  
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
 

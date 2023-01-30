@@ -11,24 +11,19 @@ import '../styles/login.css';
 
 const Login = () => {
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(null);
+  const navigate = useNavigate()
 
-  const [loading, setLoading] = useState(false);
-
-  const navigate = useNavigate();
-
-  const signIn = async(e)=>{
+  const signIn = async (e)=>{
 
     e.preventDefault();
     setLoading(true);
 
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth, 
-        email, 
-        password
-      );
+
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
       const user = userCredential.user;
 
@@ -39,7 +34,7 @@ const Login = () => {
 
     } catch (error){
       setLoading(false);
-      toast.error(error.message);
+      toast.error(error.message)
     }
 
   }
@@ -59,28 +54,23 @@ const Login = () => {
   
                   <Form className='auth__form' onSubmit={signIn}>
                     <FormGroup className='form__group'>
-                      <input
-                      type='email' 
+                      <input type='email' 
                       placeholder='Enter your email'
-                      onClick={(e) => setEmail(e.target.value)}/>
+                      onChange={e => setEmail(e.target.value)}/>
                     </FormGroup>
     
                     <FormGroup className='form__group'>
-                      <input
-                      type='password'
+                      <input type='password'
                       placeholder='Enter your password'
-                      onClick={(e) => setPassword(e.target.value)}/>
+                      onChange={e => setPassword(e.target.value)}/>
                     </FormGroup>
     
-                    <button type='submit' className="buy__btn auth__btn">
-                      Login
-                    </button>
-                    <p>
-                      Don't have an acount? <Link to='/singup'>Create an account</Link>
-                    </p>
+                    <button type='submit' className="buy__btn auth__btn">Login</button>
+                    <p>Don't have an acount? <Link to='/singup'>Create an account</Link></p>
                   </Form>
                 </Col>
-              )}
+              )
+            }
           </Row>
         </Container>
       </section>
