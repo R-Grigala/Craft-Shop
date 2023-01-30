@@ -87,7 +87,7 @@ const Singup = () => {
 
     } catch (error){
       setLoading(false);
-      toast.error("something went wrong")
+      toast.error("something went wrong");
     }
 
   };

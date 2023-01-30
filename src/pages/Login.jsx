@@ -14,7 +14,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const signIn = async (e)=>{
 
@@ -34,7 +34,7 @@ const Login = () => {
 
     } catch (error){
       setLoading(false);
-      toast.error(error.message)
+      toast.error(error.message);
     }
 
   }
