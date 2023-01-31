@@ -37,7 +37,6 @@ const Header = () => {
 
   const menuRef = useRef(null);
   const navigate = useNavigate();
-
   const { currentUser } = useAuth();
 
   const stickyHeaderFunc = ()=> {
@@ -66,7 +65,7 @@ const Header = () => {
     navigate("/cart");
   };
 
-  const toggleProfileActions = ()=> profileActionRef.current.classList.toggle('show__profileActions')
+  const toggleProfileActions = ()=> profileActionRef.current.classList.toggle('show__profileActions');
 
   return <header className='header' ref={headerRef}>
     <Container>
@@ -104,15 +103,11 @@ const Header = () => {
             <div className='profile'> 
               <motion.img 
                 whileTap={{scale:1.2}} 
-                src={currentUser ? currentUser.photoURL : userIcon} 
+                src={userIcon} 
                 alt=""
                 onClick={toggleProfileActions}
               />
-              <div 
-                className='profile__actions' 
-                ref={profileActionRef} 
-                onClick={toggleProfileActions}
-              >
+              <div className='profile__actions' ref={profileActionRef} onClick={toggleProfileActions}>
                 {currentUser ? ( 
                   <span>Logout</span> 
                 ) : ( 
@@ -125,10 +120,10 @@ const Header = () => {
             </div>
 
             <div className="mobile__menu">
-            <span onClick={menuToggle}>
-              <i className="ri-menu-line"></i>
-            </span>
-          </div>
+              <span onClick={menuToggle}>
+                <i className="ri-menu-line"></i>
+              </span>
+            </div>
           </div>
         </div>
       </Row>
