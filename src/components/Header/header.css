@@ -101,7 +101,7 @@
     flex-direction: column;
     background: var(--card-bg-01);
     line-height: 30px;
-    display: block;
+    display: none;
     cursor: pointer;
 }
 

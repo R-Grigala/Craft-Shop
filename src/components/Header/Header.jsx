@@ -3,7 +3,7 @@ import React,{useRef, useEffect} from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import './header.css';
 
-import {motion} from 'framer-motion'
+import {motion} from 'framer-motion';
 
 import logo from '../../assets/images/eco-logo.png';
 import userIcon from '../../assets/images/user-icon.png';
@@ -65,7 +65,7 @@ const Header = () => {
     navigate("/cart");
   };
 
-  const toggleProfileActions = ()=> profileActionRef.current.classList.toggle('show__profileActions');
+  const toggleProfileActions = ()=> profileActionRef.current.classList.toggle("show__profileActions");
 
   return <header className='header' ref={headerRef}>
     <Container>
@@ -107,7 +107,7 @@ const Header = () => {
                 alt=""
                 onClick={toggleProfileActions}
               />
-              <div className='profile__actions' ref={profileActionRef} onClick={toggleProfileActions}>
+              <div className="profile__actions" ref={profileActionRef} onClick={toggleProfileActions}>
                 {currentUser ? ( 
                   <span>Logout</span> 
                 ) : ( 
