@@ -105,7 +105,7 @@
     cursor: pointer;
 }
 
-.show__profileActions {
+.nav__icons .profile .show__profileActions {
     display: block;
 }
 

@@ -13,7 +13,7 @@ const useAuth = () => {
             } else {
                 setCurrentUser(null);
             }
-        })
+        });
     });
 
     return {
