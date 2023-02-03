@@ -115,17 +115,21 @@ const Header = () => {
             <div className='profile'> 
               <motion.img 
                 whileTap={{scale:1.2}} 
-                src={userIcon} 
+                src={currentUser ? currentUser.photoURL : userIcon} 
                 alt=""
                 onClick={toggleProfileActions}
               />
-              <div className="profile__actions" ref={profileActionRef} onClick={toggleProfileActions}>
+              <div className="profile__actions" 
+                ref={profileActionRef} 
+                onClick={toggleProfileActions}
+              >
                 {currentUser ? ( 
                   <span onClick={logout}>Logout</span> 
                 ) : ( 
                   <div className='d-flex align-items-center justify-content-center flex-column'>
                     <Link to='/signup'>Signup</Link>
                     <Link to='/login'>Login</Link>
+                    <Link to='/dashboard'>Dashboard</Link>
                   </div>
                 )}
               </div>
