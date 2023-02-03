@@ -12,7 +12,9 @@ import { Container, Row } from 'reactstrap';
 import { useSelector } from 'react-redux';
 
 import useAuth from '../../custom-hooks/useAuth';
-
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebaseConfig';
+import { toast } from 'react-toastify';
 
 const nav__links = [
   {
@@ -51,6 +53,16 @@ const Header = () => {
       }
     });
   };
+
+  const logout = ()=> {
+
+    signOut(auth).then(()=> {
+      toast.success('Logged out');
+      navigate("/home");
+    }).catch(err=>{
+      toast.error(err.message);
+    })
+  }
 
   useEffect(() => {
     stickyHeaderFunc();
@@ -109,9 +121,9 @@ const Header = () => {
               />
               <div className="profile__actions" ref={profileActionRef} onClick={toggleProfileActions}>
                 {currentUser ? ( 
-                  <span>Logout</span> 
+                  <span onClick={logout}>Logout</span> 
                 ) : ( 
-                  <div>
+                  <div className='d-flex align-items-center justify-content-center flex-column'>
                     <Link to='/signup'>Signup</Link>
                     <Link to='/login'>Login</Link>
                   </div>
