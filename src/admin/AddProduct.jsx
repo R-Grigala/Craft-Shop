@@ -1,5 +1,10 @@
 import React,{useState} from 'react';
+import { toast } from 'react-toastify';
 import { Container, Row, Col, Form, FormGroup } from 'reactstrap';
+
+import { db, storage } from '../firebaseConfig';
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { collection, addDoc } from 'firebase/firestore';
 
 const AddProduct = () => {
 
@@ -9,19 +14,73 @@ const AddProduct = () => {
   const [enterCategory, setEnterCategory] = useState('');
   const [enterPrice, setEnterPrice] = useState('');
   const [enterProductImg, setEnterProductImg] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const AddProduct = async(e) =>{
-    e.preventDefault()
-    const product = {
-      title: enterTitle,
-      shortDesc: enterShortDesc,
-      description: enterDescription,
-      category: enterCategory,
-      price: enterPrice,
-      imgUrl: enterProductImg
-    }
+    e.preventDefault();
+    setLoading(true);
 
-    console.log(product);
+    // const product = {
+    //   title: enterTitle,
+    //   shortDesc: enterShortDesc,
+    //   description: enterDescription,
+    //   category: enterCategory,
+    //   price: enterPrice,
+    //   imgUrl: enterProductImg
+    // };
+
+    // ====== Add Product to the Firebase Database ====== 
+
+    try {
+
+      const docRef = await collection(db,'products');
+
+      const storageRef = ref(storage,`productImages/${Date.now() + enterProductImg.name}`)
+      const uploadTask = uploadBytesResumable(storageRef, enterProductImg)
+
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case 'paused':
+              console.log('Upload is paused');
+              break;
+            case 'running':
+              console.log('Upload is running');
+              break;
+            default:
+              console.log('Upload is Error');
+              break;
+          }
+        },
+        (error) => {
+          toast.error(error.message);
+        },
+        ()=>{
+          getDownloadURL(uploadTask.snapshot.ref).then(
+            async(downloadURL)=>{
+              await addDoc(docRef, {
+                title: enterTitle,
+                shortDesc: enterShortDesc,
+                description: enterDescription,
+                category: enterCategory,
+                price: enterPrice,
+                imgUrl: downloadURL,
+              })
+            }
+          )
+        }
+      );
+
+      setLoading(false);
+      toast.success('Product successfully added!');
+
+    } catch(error){
+
+      setLoading(false);
+      toast.error("something went wrong");
+    }
   }
 
   return (
@@ -65,7 +124,7 @@ const AddProduct = () => {
                   <span>Product Image</span>
                   <input 
                     type="file" 
-                    onChange={e => setEnterProductImg(e.target.files(0))}
+                    onChange={e => setEnterProductImg(e.target.files[0])}
                     required
                   />
                 </FormGroup>

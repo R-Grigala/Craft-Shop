@@ -40,7 +40,7 @@ const Singup = () => {
       
       const user = userCredential.user;
 
-      const storageRef = ref(storage, `images/${Date.now() + username}`);
+      const storageRef = ref(storage,`images/${Date.now() + username}`);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
       uploadTask.on('state_changed',
@@ -130,7 +130,7 @@ const Singup = () => {
                   <FormGroup className="form__group">
                     <input 
                       type="file"
-                      onClick={(e) => setFile(e.target.file[0])}
+                      onChange={(e) => setFile(e.target.files[0])}
                     />
                   </FormGroup>
                   
