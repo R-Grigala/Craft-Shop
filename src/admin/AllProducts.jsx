@@ -9,7 +9,7 @@ const AllProducts = () => {
   const { data: productsData, loading } = useGetData("products");
 
   const deleteProduct = async(id)=>{
-    
+    await deleteDoc(doc(db, 'products', id))
   }
 
   return (
@@ -39,7 +39,15 @@ const AllProducts = () => {
                       <td>{item.title}</td>
                       <td>{item.category}</td>
                       <td>${item.price}</td>
-                      <td><button className='btn btn-danger'>Delete</button></td>
+                      <td>
+                        <button 
+                        onClick={()=>{
+                          deleteProduct(item.id);
+                        }} 
+                        className='btn btn-danger'>
+                          Delete
+                        </button>
+                      </td>
                     </tr>
                   ))
                 )}
