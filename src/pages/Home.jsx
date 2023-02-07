@@ -3,8 +3,6 @@ import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-import products from "../assets/data/products"
-
 import Helmet from '../components/Helmet/Helmet';
 
 import '../styles/home.css';
@@ -17,9 +15,13 @@ import ProductsList from '../components/UI/ProductsList';
 
 import Clock from "../components/UI/Clock";
 
-import counterImg from '../assets/images/counter-timer-img.png'
+import counterImg from '../assets/images/counter-timer-img.png';
+
+import useGetData from '../custom-hooks/useGetData';
 
 const Home = () => {
+
+  const {data: products, loading} = useGetData('products')
 
   const [trendingProducts, setTrendingProducts] = useState([]);
   const [bestSalesProducts, setBestSalesProducts] = useState([]);
@@ -57,7 +59,7 @@ const Home = () => {
     setWirelessProducts(filteredWirelessProducts);
     setPopularProducts(filteredPopularProducts);
 
-  }, []);
+  }, [products]);
 
   return <Helmet title={"Home"}>
     <section className="hero__section">
@@ -87,7 +89,12 @@ const Home = () => {
           <Col lg='12' className='text-center'>
             <h2 className='section__title'>Trending Products</h2>
           </Col>
-          <ProductsList data={trendingProducts}/>
+          {loading ? (
+            <h5>Loading....</h5>
+          ):(
+            <ProductsList data={trendingProducts}/>
+          )
+          }
         </Row>
       </Container>
     </section>
@@ -98,7 +105,12 @@ const Home = () => {
           <Col lg='12' className='text-center'>
             <h2 className='section__title'>Best Sales</h2>
           </Col>
-          <ProductsList data={bestSalesProducts}/>
+          {loading ? (
+            <h5>Loading....</h5>
+          ):(
+            <ProductsList data={bestSalesProducts}/>
+          )
+          }
         </Row>
       </Container>
     </section>
@@ -131,8 +143,18 @@ const Home = () => {
           <Col lg='12' className='text-center mb-5'>
             <h2 className='section__title'>New Arrivals</h2>
           </Col>
-          <ProductsList data={mobileProducts} />
-          <ProductsList data={wirelessProducts} />
+          {loading ? (
+            <h5>Loading....</h5>
+          ):(
+            <ProductsList data={mobileProducts}/>
+          )
+          }
+          {loading ? (
+            <h5>Loading....</h5>
+          ):(
+            <ProductsList data={wirelessProducts}/>
+          )
+          }
         </Row>
       </Container>
     </section>
@@ -143,7 +165,12 @@ const Home = () => {
           <Col lg='12' className='text-center mb-5'>
             <h2 className='section__title'>Popular in Category</h2>
           </Col>
-          <ProductsList data={popularProducts} />
+          {loading ? (
+            <h5>Loading....</h5>
+          ):(
+            <ProductsList data={popularProducts}/>
+          )
+          }
         </Row>
       </Container>
     </section>

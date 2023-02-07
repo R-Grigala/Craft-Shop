@@ -2,7 +2,6 @@ import React,{ useState, useRef, useEffect } from 'react';
 
 import { Container, Row, Col } from 'reactstrap';
 import { useParams } from 'react-router-dom';
-import products from '../assets/data/products';
 import Helmet from '../components/Helmet/Helmet';
 import CommonSection from '../components/UI/CommonSection';
 import { motion } from 'framer-motion';
@@ -13,7 +12,13 @@ import { useDispatch } from 'react-redux';
 import { cartActions } from '../redux/slices/cartSlice';
 import { toast } from 'react-toastify';
 
+import { db } from '../firebaseConfig';
+import { doc, getDoc } from 'firebase/firestore';
+import useGetData from '../custom-hooks/useGetData';
+
 const ProductDetails = () => {
+
+  const [product, setProduct] =useState({})
 
   const [tab, setTab] = useState('desc');
   const reviewUser = useRef('');
@@ -22,14 +27,31 @@ const ProductDetails = () => {
 
   const [rating, setRating] = useState(null);
   const {id} = useParams();
-  const product = products.find(item => item.id === id);
+
+  const {data: products} = useGetData('products')
+
+  const docRef = doc(db, 'products', id)
+
+  useEffect(()=>{
+    const getProduct = async()=>{
+      const docSnap = await getDoc(docRef)
+
+      if(docSnap.exists()){
+        setProduct(docSnap.data())
+      }else {
+        console.log('no product!')
+      }
+    }
+    
+    getProduct();
+  },[])
 
   const {
     imgUrl, 
     productName, 
     price, 
-    avgRating, 
-    reviews, 
+    // avgRating, 
+    // reviews, 
     description, 
     shortDesc,
     category,
@@ -105,9 +127,9 @@ const ProductDetails = () => {
                     </span>
                   </div>
 
-                  <p>
+                  {/* <p>
                     (<span>{avgRating}</span> ratings)
-                  </p>
+                  </p> */}
                 </div>
                 <div className='d-flex align-items-center gap-5'>
                   <span className='product__price'>${price}</span>
@@ -131,8 +153,11 @@ const ProductDetails = () => {
               <div className="tab__wrapper d-flex align-items-center gap-5">
                 <h6 className={`${tab === 'desc' ? 'active__tab' : ''}`} 
                   onClick={() => setTab('desc')}>Description</h6>
-                <h6 className={`${tab === 'rev' ? 'active__tab' : ''}`}
-                  onClick={() => setTab('rev')}>Reviews ({reviews.length})</h6>
+                {/* <h6
+                  className={`${tab === 'rev' ? 'active__tab' : ''}`}
+                  onClick={() => setTab('rev')}>
+                    Reviews ({reviews.length})
+                </h6> */}
               </div>
 
               {tab==='desc' ? (
@@ -142,7 +167,7 @@ const ProductDetails = () => {
                 ):(
                   <dev className="product__review mt-5">
                     <div className="reviews__wrapper">
-                      <ul>
+                      {/* <ul>
                         {reviews?.map((item, index) => (
                           <li key={index} className='mb-4'>
                             <h6>Jhon Doe</h6>
@@ -150,7 +175,7 @@ const ProductDetails = () => {
                             <p>{item.text}</p>
                           </li>
                         ))}
-                      </ul>
+                      </ul> */}
                       <div className="review__form">
                         <h4>Leave your experience</h4>
                         <form action='' onSubmit={submitHandler}>

@@ -5,6 +5,11 @@ import '../styles/dashboard.css';
 import useGetData from '../custom-hooks/useGetData';
 
 function Dashboard() {
+
+  const {data: products} = useGetData('products')
+  const {data: users} = useGetData('users')
+
+
   return (
     <>
       <section>
@@ -25,13 +30,13 @@ function Dashboard() {
             <Col className='lg-3'>
               <div className='products__box'>
                 <h5>Total Products</h5>
-                <span>890</span>
+                <span>{products.length}</span>
               </div>
             </Col>
             <Col className='lg-3'>
               <div className='users__box'>
                 <h5>Total Users</h5>
-                <span>90</span>
+                <span>{users.length}</span>
               </div>
             </Col>
           </Row>
