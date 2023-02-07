@@ -4,12 +4,15 @@ import useGetData from '../custom-hooks/useGetData';
 import { db } from "../firebaseConfig";
 import { doc, deleteDoc } from 'firebase/firestore';
 
+import { toast } from 'react-toastify';
+
 const AllProducts = () => {
 
   const { data: productsData, loading } = useGetData("products");
 
   const deleteProduct = async(id)=>{
-    await deleteDoc(doc(db, 'products', id))
+    await deleteDoc(doc(db, 'products', id));
+    toast.success("Deleted!");
   }
 
   return (
