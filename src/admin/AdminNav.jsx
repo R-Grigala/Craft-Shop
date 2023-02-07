@@ -48,7 +48,7 @@ const AdminNav = () => {
                             <span>
                                 <i className="ri-settings-2-line"></i>
                             </span>
-                            <img src={currentUser.photoURL} alt="can't"/>
+                            <img src={ currentUser && currentUser.photoURL} alt="can't"/>
                         </div>
                     </div>
                 </Container>
