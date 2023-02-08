@@ -4,12 +4,12 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBfdwx8nggm2iNIddqFMB-OzgGdIGtEOBc",
-  authDomain: "maltimart-7108e.firebaseapp.com",
-  projectId: "maltimart-7108e",
-  storageBucket: "maltimart-7108e.appspot.com",
-  messagingSenderId: "801922359042",
-  appId: "1:801922359042:web:f7cd2648651cb8329cec1b"
+  apiKey: process.env.React_App_apiKey,
+  authDomain: process.env.React_App_authDomain,
+  projectId: process.env.React_App_projectId,
+  storageBucket: process.env.React_App_storageBucket,
+  messagingSenderId: process.env.React_App_messagingSenderId,
+  appId: process.env.React_App_appId
 };
 
 // Initialize Firebase
