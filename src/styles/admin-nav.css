@@ -62,7 +62,7 @@
     justify-content: center;
 }
 
-.admin__menu-list .admin__menu-item a {
+.admin__menu-item a {
     color: var(--primary-color);
     font-weight: 500;
     padding: 10px 15px;

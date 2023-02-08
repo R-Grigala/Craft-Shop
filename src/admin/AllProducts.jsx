@@ -32,7 +32,9 @@ const AllProducts = () => {
               </thead>
               <tbody>
                 {loading ? (
-                  <h4 className='py-5 text-center fw-bold'>Loading.....</h4>
+                  <tr>
+                    <th className='py-5 text-center fw-bold'>Loading.....</th>
+                  </tr>
                 ):(
                   productsData.map(item=>(
                     <tr key={item.id}>

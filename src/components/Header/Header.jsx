@@ -77,13 +77,17 @@ const Header = () => {
     navigate("/cart");
   };
 
+  const navigateToHome =()=>{
+    navigate("/home");
+  };
+
   const toggleProfileActions = ()=> profileActionRef.current.classList.toggle("show__profileActions");
 
   return <header className='header' ref={headerRef}>
     <Container>
       <Row>
         <div className='nav__wrapper'>
-          <div className='logo'>
+          <div className='logo' onClick={navigateToHome}>
             <img src={logo} alt='logo' />
             <div>
               <h1>Multimart</h1>

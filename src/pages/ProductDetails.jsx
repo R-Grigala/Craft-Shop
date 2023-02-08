@@ -18,7 +18,7 @@ import useGetData from '../custom-hooks/useGetData';
 
 const ProductDetails = () => {
 
-  const [product, setProduct] =useState({})
+  const [product, setProduct] = useState({});
 
   const [tab, setTab] = useState('desc');
   const reviewUser = useRef('');
@@ -26,7 +26,7 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
 
   const [rating, setRating] = useState(null);
-  const {id} = useParams();
+  const { id } = useParams();
 
   const {data: products} = useGetData('products')
 

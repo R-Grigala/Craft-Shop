@@ -32,7 +32,9 @@ const Users = () => {
                             </thead>
                             <tbody>
                                 {loading ? (
-                                    <h5 className='pt-5 fw-bold'>Loading.....</h5>
+                                    <tr>
+                                        <td className='pt-5 fw-bold'>Loading.....</td>
+                                    </tr>
                                 ) : (
                                     usersData?.map(user => (
                                         <tr key={user.uid}>

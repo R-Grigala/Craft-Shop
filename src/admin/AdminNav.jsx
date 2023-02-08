@@ -3,7 +3,7 @@ import { Container, Row } from 'reactstrap';
 import useAuth from '../custom-hooks/useAuth';
 import '../styles/admin-nav.css';
 
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink} from 'react-router-dom';
 
 const admin__nav = [
     {
@@ -35,7 +35,7 @@ const AdminNav = () => {
                 <Container>
                     <div className='admin__nav-wrapper-top'>
                         <div className="logo">
-                            <h2>Multimart</h2>
+                            <Link to='/home'><h2>Multimart</h2></Link>
                         </div>
                         <div className="search__box">
                             <input type='text' placeholder='Search....'/>
@@ -63,9 +63,7 @@ const AdminNav = () => {
                             {
                                 admin__nav.map((item, index)=> (
                                     <li className="admin__menu-item" key={index}>
-                                        <NavLink 
-                                            to={item.path} 
-                                            className={ navClass => 
+                                        <NavLink to={item.path} className={ navClass => 
                                                 navClass.isActive ? 'active__admin-menu' : ''
                                             }
                                         >
