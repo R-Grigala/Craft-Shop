@@ -21,6 +21,9 @@
     font-weight: 500;
 }
 
+.product__category {
+    font-size: 1.2rem;
+}
 .tab__wrapper {
     color: var(--primary-color);
     font-weight: 500;
